@@ -17,6 +17,24 @@ const emailIcon = require("./signup_email.png");
 const birthdayIcon = require("./signup_birthday.png");
 
 export default class SignupVriew extends Component {
+
+
+async  _handleRegister(event) {
+
+  var local = 'http://10.69.194.146:8089/userlogin';
+
+  response = await fetch(local,{
+      method: 'POST',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/x-www-form-urlencoded', 
+      },
+      body: 'uid='+this.state.username+'&pid='+this.state.password
+    });
+
+}
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -55,24 +73,9 @@ export default class SignupVriew extends Component {
               </View>
               <TextInput
                 style={[styles.input, styles.whiteFont]}
-                placeholder="Nombre"
+                placeholder="Usuario"
                 placeholderTextColor="#FFF"
                 underlineColorAndroid='transparent' 
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <View style={styles.iconContainer}>
-                <Image 
-                  source={emailIcon} 
-                  style={styles.inputIcon} 
-                  resizeMode="contain"
-                />
-              </View>
-              <TextInput
-                style={[styles.input, styles.whiteFont]}
-                placeholder="Correo"
-                placeholderTextColor="#FFF" 
               />
             </View>
 
@@ -92,6 +95,20 @@ export default class SignupVriew extends Component {
               />
             </View>
 
+            <View style={styles.inputContainer}>
+              <View style={styles.iconContainer}>
+                <Image 
+                  source={emailIcon} 
+                  style={styles.inputIcon} 
+                  resizeMode="contain"
+                />
+              </View>
+              <TextInput
+                style={[styles.input, styles.whiteFont]}
+                placeholder="Correo"
+                placeholderTextColor="#FFF" 
+              />
+            </View>
 
           </View>
 

@@ -6,13 +6,12 @@ import {
   View,
   Image,
   TextInput,
-  Button,
   TouchableOpacity
 } from 'react-native';
 
 import { ListView } from 'react-native';
 import SGListView from 'react-native-sglistview';
-import { Card, CardItem } from 'native-base';
+import { Container, Header, Button, Content, Card, CardItem, Left, Right, Body, Thumbnail, Spinner, Icon, List, ListItem, Title, Subtitle, Drawer } from 'native-base';
 
 
 const LIST_VIEW = 'listview';
@@ -24,127 +23,170 @@ const lockIcon = require("./signup_lock.png");
 const emailIcon = require("./signup_email.png");
 const birthdayIcon = require("./signup_birthday.png");
 
+const datas = [
+  {
+    img: "test",
+    text: "Sankhadeep",
+    note: "Its time to build a difference . ."
+  },
+  {
+    img: "test",
+    text: "Supriya",
+    note: "One needs courage to be happy and smiling all time . . "
+  },
+  {
+    img: "test",
+    text: "Himanshu",
+    note: "Live a life style that matchs your vision"
+  },
+  {
+    img: "test",
+    text: "Shweta",
+    note: "Failure is temporary, giving up makes it permanent"
+  },
+  {
+    img: "test",
+    text: "Shruti",
+    note: "The biggest risk is a missed opportunity !!"
+  },
+  {
+    img: "test",
+    text: "Shivraj",
+    note: "Time changes everything . ."
+  }
+];
+
+//import SideBarScreen from "./screens/sidebar/index";
+
 export default class MemberArea extends Component {
 
 constructor(props) {
+
     super(props);
-    
-     this.props.stories=[
-                        {
-                          "topicName":"sometopic",
-                          "title":"sometitle",
-                          "imageurl":"imageurl",
-                          "story":"storydata",
-                          "moral":"",
-                          "sid":0
-                        }
-                      ];
-  
+
+    var ds = null;
 
     this.state = {
                     isLoading: true,
+                    dataSource:ds,
           }
+
+    //this.loadData().bind(this)();
+
   }
 
 
 
-  static renderRow(rowData, sectionID, rowID) {
-    return (
-      <View>
-        <Text>{rowData.title}</Text>
-      </View>
-    );
-  }
+  async componentWillMount() {
+    
+    try {
 
+      //var local = 'http://localhost:8089/classes/';
+      //var local = 'http://10.69.194.146:8089/classes/';
+      //var local = 'http://192.168.0.8:8039/govirfit/discovery.php/checkclases/';
+      var local = 'http://www.govirfit.com/discovery.php/checkclases/';
+      //Tia marta
+      //var local = 'http://192.168.1.21:8089/classes/';
+      
+      let response = await fetch(local);
+      let responseJson = await response.json();
+      
+      if(response.status >= 200 && response.status < 300){
+
+          datas = responseJson;
+
+          this.setState({
+                    dataSource: datas
+                 })
+
+      }else{
+          console.warn("Error cargando las clases, revise su conexion a internet");
+      }
+
+    } catch(error) {
+      console.error(error);
+    }
+
+  }
 
    _handlePress(event) {
        
     }
 
-    renderCards(stories) {
-    return (
-        <Card>
-          <CardItem>
-             <Left style={{flex:0.8}}>
-               <Icon name="ios-book" />
-                <Body>
-                  <Text style={{fontWeight:'bold',fontSize:17}}>Test</Text>
-                  <Text note style={{fontSize:15}}>Hola</Text>
-                </Body>
-              </Left>
-              <Right style={{flex:0.2}}>
-                <Icon name="ios-heart"/>
-              </Right>
-          </CardItem>
-          <CardItem cardBody>
-            <Text>{stories.story}</Text>
-          </CardItem>
-          <CardItem content>
-            <Text>{stories.story}</Text>
-          </CardItem>
-        </Card>
-      );
-  }
+
+  // Nav options can be defined as a function of the screen's props:
+  static navigationOptions = ({ navigation }) => ({
+    //title: 'Chat with ${navigation.state.params.user}',
+  });
 
   render() {
+    
+    // The screen's current route is passed in to `props.navigation.state`:
+    const { params } = this.props.navigation.state;
+    const { navigate } = this.props.navigation;
+
+    //var userid = params.iduser;
+    //var userName = params.user;
+
     return (
-      <View style={styles.container}>
+        <Container>
+        <Header
+           backgroundColor = '#00874F'>
+            <Left>
+            <Button transparent>
+              <Icon ios='ios-menu' android="md-menu" />
+            </Button>
+           </Left>
+           <Body>
+            <Title>Clases grupales</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Thumbnail size={45} source={{ uri: 'http://www.govirfit.com/appimg/logo_mobile.png'}} />
+            </Button>
+          </Right>
+        </Header>
+        <Content>
+              <List
+            dataArray={datas}
+            renderRow={data =>
+              <ListItem thumbnail
+               onPress={
+                        () => navigate('Class', { classid: data.idspecialclass,
+                                                  classtitle: data.class_title,
+                                                  classtext: data.descripcion_movil,
+                                                  classimage: data.class_picture,
+                                                  classplace: data.place_name,
+                                                  classaddress: data.place_address,
+                                                  classdate: data.fecha,
+                                                  classstart: data.start_hour,
+                                                  classend: data.end_hour
 
-        <View style={styles.toolbar}>
-                    
-                    <View style={styles.headerIconView}>
-                        <TouchableOpacity style={styles.headerBackButtonView}>
-                    <Image 
-                          source={birthdayIcon} 
-                          style={styles.backButtonIcon} 
-                          resizeMode="contain"
-                    />
-                    </TouchableOpacity>
-                    </View>
-                    <Text style={styles.toolbarButton}></Text>
-                    
-                    <Button style={styles.toolbarTitle}
-                            onPress={this._handlePress.bind(this)}
-                            title="Explora"
-                            color="#FAD205"
-                            accessibilityLabel="Buscar en las categorias"
-                    />
-                    <Text style={styles.toolbarButton}></Text>
-                    <View style={styles.headerIconView}>
-                        <TouchableOpacity style={styles.headerBackButtonView}>
-                    <Image 
-                          source={birthdayIcon} 
-                          style={styles.backButtonIcon} 
-                          resizeMode="contain"
-                    />
-                    </TouchableOpacity>
-                    </View>
-        </View>
-
-        <View style={styles.headerContainer}>
-          <Text style={styles.notify}>Regala una clase a un amigo usando el boton de regalo</Text>
-          <Text style={styles.welcome}>¡Hola Ruben!</Text>
-        </View>
-
-        <View style={styles.headerContainer}>
-        <SGListView
-                    dataSource={this.getDataSource()}
-                    renderRow={this.renderCards}
-                    pageSize={10}
-                    stickyHeaderIndices={[]}
-                    onEndReachedThreshold={1}
-                    initialListSize={10}
-                    scrollRenderAheadDistance={4}
-        />
-        </View>
-
-      </View>
+                                                 })
+                }>
+                <Left>
+                  <Thumbnail size={55} source={{ uri: 'http://govirfit.com/appimg/specialclass/'+data.class_picture }} />
+                </Left>
+                <Body>
+                  <Text style={styles.classTitle}>{data.class_title}</Text>
+                  <Text numberOfLines={1} note>Lugar: {data.place_name} </Text>
+                  <Text numberOfLines={1} note>Direccion:{data.place_address}</Text>
+                </Body>
+                <Right>
+                    <Thumbnail size={55} source={{ uri: 'http://www.govirfit.com/appimg/pilates_icon.png'}} />
+                    <Text style={styles.classTitle}>{data.price} PESOS</Text>
+                    <Text>{data.cantidad_package} Clases</Text>
+                </Right>
+              </ListItem>}
+          />
+        </Content>
+      </Container>
     );
   }
 
   getDataSource() {
 
-    console.log('ingreso a datasource');
+    //console.log('ingreso a datasource');
 
     const dataSource = new ListView.DataSource(
       { rowHasChanged: (r1, r2) => r1.uuid !== r2.uuid });
@@ -163,7 +205,7 @@ constructor(props) {
 
     const deals = data;
 
-    console.log("datos"+data);
+    //console.log("datos"+data);
 
 
     return deals ? dataSource.cloneWithRows(data) : dataSource;
@@ -172,6 +214,10 @@ constructor(props) {
 }//end class
 
 let styles = StyleSheet.create({
+  classTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   toolbar:{
         backgroundColor:'#76C04E',
         paddingTop:30,
@@ -203,7 +249,8 @@ let styles = StyleSheet.create({
     flexDirection:'column',
     alignItems:'center',
     flex: 1,
-  },
+  }
+  ,
   inputsContainer: {
     flex: 3,
     marginTop: 50,

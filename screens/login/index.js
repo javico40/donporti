@@ -8,8 +8,11 @@ import {
   Dimensions,
   TextInput,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
+
+import md5 from "react-native-md5";
 
 const { width, height } = Dimensions.get("window");
 
@@ -22,18 +25,12 @@ export default class LoginScreen extends Component {
 	
 	constructor(){
 		super()
-
-		this.state = {
-			user:"",
-			password:"",
-			error:""
-		}
-
+    this.state = { username: null, password: null };
 		this.loginValidate = this.loginValidate.bind(this);
 		
 	}
 
-    _handlePress(event) {
+    async  _handlePress(event) {
         let username = this.state.user;
         let password = this.state.password;
 
@@ -41,10 +38,14 @@ export default class LoginScreen extends Component {
     }
 
     _handleRegister(event) {
+
+      const {navigate} = this.props.navigation;
+      navigate('Signup');
       
+      /*
       this.props.navigator.push({
         'id': 'Signup'
-        });
+        });*/
       
     }
 
@@ -52,20 +53,204 @@ export default class LoginScreen extends Component {
      
     }
 
+    async saveItem(item, selectedValue) {
+      try {
+        await AsyncStorage.setItem(item, selectedValue);
+      } catch (error) {
+        console.error('AsyncStorage error: ' + error.message);
+      }
+    }
+
+    async userLogout() {
+    try {
+      await AsyncStorage.removeItem('id_token');
+      Alert.alert('Logout Success!');
+      Actions.Authentication();
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
+
 
   async loginValidate(username, password){
 
 	try{
 
-	console.log(username);
-	console.log('test '+password);
+     //const {navigate} = this.props.navigation;
+     //navigate('Memberarea', {user: answer});
 
-	this.props.navigator.push({
-		'id': 'Memberarea'
-	});
+  if (!this.state.username || !this.state.password) return;
+  
+	//console.warn(this.state.username);
+	//console.warn(this.state.password);
+  
+  const uid = this.state.username;
+  const pid = this.state.password; 
+
+  let hex_md5v = md5.hex_md5(pid);
+  
+/*
+    try {
+      
+      let response = await fetch('https://facebook.github.io/react-native/movies.json');
+      let responseJson = await response.json();
+      
+      if(response.status >= 200 && response.status < 300){
+          console.warn("funciona");
+      }else{
+          console.warn("no funciona");
+      }
+
+      console.warn('iniciando la validacion');
+
+      response = await fetch('http://192.168.0.6:8089');
+      responseJson = await response.json();
+      
+      if(response.status >= 200 && response.status < 300){
+          console.warn("funcionoooo");
+      }else{
+          console.warn("no funcionoooo");
+      }
+
+      console.warn('terminando la validacion');
+
+
+    } catch(error) {
+      console.error(error);
+    }*/
+
+  
+  const answer = '';
+
+  //console.warn('comenzando el fetch');
+
+  /*
+  response = await fetch('http://192.168.0.6:8089/userlogin',{
+      method: 'POST',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json', 
+      },
+      body: JSON.stringify({
+        session:{
+          uid: this.state.username,
+          pid: this.state.password,
+        }
+      })
+    });
+    */
+
+    //var local = 'http://localhost:8089/userlogin';
+    //var local = 'http://10.69.194.139:8089/userlogin';
+    var local = 'http://192.168.0.8:8039/govirfit/discovery.php/userlogin/';
+    //tia marta
+    //var local = 'http://192.168.1.21:8089/userlogin';
+
+    //console.warn('uid:'+this.state.username);
+    //console.warn('pid'+hex_md5v);
+
+    response = await fetch(local,{
+      method: 'POST',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/x-www-form-urlencoded', 
+      },
+      body: 'uid='+this.state.username+'&pid='+hex_md5v
+    });
+
+    console.warn('paso');
+    //let res = await response.text();
+
+    responseJson = await response.json();
+
+    console.warn('respuesta '+responseJson);
+    
+    if(response.status >= 200 && response.status < 300){
+
+      console.warn('Respuesta del servidor');
+      this.setState({error:""});
+
+      //console.warn("recibido "+responseJson);
+      //var stringify = JSON.stringify(reidsponseJson);
+      //console.warn("transformado "+stringify); 
+
+      for (var i = 0; i < responseJson.length; i++) {
+        answer = responseJson[i]['username'];
+        userid = responseJson[i]['idusers'];
+      } 
+
+      console.warn(answer);  
+
+    }else{
+      let error = res;
+      console.warn('Error');
+      throw res;
+    }
+
+   if(answer != '' && answer == this.state.username){
+      const {navigate} = this.props.navigation;
+      navigate('Memberarea', {user: answer, iduser: userid});
+    }else{
+      console.warn('Usuario o contraseña invalidos');
+    }
+
+
+   // console.warn('termino el fetch '+answer);
+
+  //console.warn('http://192.168.0.6:8089/users/'+uid+'/'+pid);
+
+  //fetch('http://192.168.0.6:3001/users/'+username+'/'+password, 
+
+/*
+  console.warn('comenzando el fetch');
+
+  // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
+  let response = await fetch('http://192.168.0.6:8089/userlogin', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      uid: this.state.username,
+      pid: this.state.password,
+    })
+  })
+  .then((response) => response.json())
+  .then((responseData) => {
+    this.saveItem('id_token', responseData.id_token),
+    Alert.alert( 'Signup Success!', 'Click the button to get a Chuck Norris quote!'),
+    console.warn('paso por aqui');
+    //const {navigate} = this.props.navigation,
+    //navigate('Memberarea');
+  })
+  .done(); 
+
+
+    console.warn('terminando el fetch');  
+
+*/
+
+  /*
+  fetch('http://localhost:8089/users/${data.foo}/${data.bar}')
+ .then(res => {
+    if (res.ok){
+     return res.json()
+    }else{
+     throw new Error(res)
+    }
+ .then(json => {
+   for (var key in json) {
+     // now you can parse it by calling json[key]
+     answer = json['username'];
+   }
+  }
+ .catch(error => console.log(error)
+ }*/
+
+ 
+ 
 	
-	/*
-	let response = await fetch('http://localhost:8089/users/',{
+	
+  /*
+	let response = await fetch('http://localhost:8089/users/'+username+'/'+password,{
     		  method: 'GET',
     		  headers: {
     			  'Accept':'application/json',
@@ -130,6 +315,9 @@ export default class LoginScreen extends Component {
   }	
 	
   render() {
+
+    const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <Image source={background} style={styles.background} resizeMode="cover">
@@ -145,7 +333,7 @@ export default class LoginScreen extends Component {
                 placeholder="Usuario" 
                 placeholderTextColor="#FFF"
                 style={styles.input}
-                onChangeText={(text) => this.setState({user: text})}
+                onChangeText={(text) => this.setState({username: text})}
               />
             </View>
             <View style={styles.inputWrap}>
