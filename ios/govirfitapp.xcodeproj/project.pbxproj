@@ -64,6 +64,8 @@
 		49277DBCCF2043408CC3BE3D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62DA9A4BE53548178A674BD7 /* Octicons.ttf */; };
 		2A679FBE088D4082925F2F1B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7145FE477E814F33B537D812 /* SimpleLineIcons.ttf */; };
 		44BBADF6750E47A981C3E43B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA7DDD0E04E9485592E086B2 /* Zocial.ttf */; };
+		25F145FD23D84F27ACBDF796 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 596CAA2D628B43698ABD63A6 /* libReactNativeExceptionHandler.a */; };
+		9B875922F9E64A06B911DBDA /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6802F9CC0C9A4D6F8EAA3B54 /* libRCTRestart.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -315,6 +317,10 @@
 		62DA9A4BE53548178A674BD7 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7145FE477E814F33B537D812 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BA7DDD0E04E9485592E086B2 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4AE73EA1D84B4BF49E2CB8BA /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeExceptionHandler.xcodeproj"; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		596CAA2D628B43698ABD63A6 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; name = "libReactNativeExceptionHandler.a"; path = "libReactNativeExceptionHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		9E20E0814C544874AC0EE1A9 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; name = "RCTRestart.xcodeproj"; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		6802F9CC0C9A4D6F8EAA3B54 /* libRCTRestart.a */ = {isa = PBXFileReference; name = "libRCTRestart.a"; path = "libRCTRestart.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +354,8 @@
 				190EDCA180D14904B49E7A32 /* libsqlite3.0.tbd in Frameworks */,
 				567E2AD15BAC469984C9E200 /* libRNRandomBytes.a in Frameworks */,
 				D662F63C01D34F1D93EA5C5A /* libRNVectorIcons.a in Frameworks */,
+				25F145FD23D84F27ACBDF796 /* libReactNativeExceptionHandler.a in Frameworks */,
+				9B875922F9E64A06B911DBDA /* libRCTRestart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +525,8 @@
 				40900140947A46A199F10C77 /* RCTGoogleAnalyticsBridge.xcodeproj */,
 				D661D80728F5466AA7075DE7 /* RNRandomBytes.xcodeproj */,
 				5958105F517D40C1AEA21C1B /* RNVectorIcons.xcodeproj */,
+				4AE73EA1D84B4BF49E2CB8BA /* ReactNativeExceptionHandler.xcodeproj */,
+				9E20E0814C544874AC0EE1A9 /* RCTRestart.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1113,12 +1123,16 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Debug;
@@ -1142,12 +1156,16 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Release;
@@ -1172,6 +1190,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Debug;
@@ -1195,6 +1215,8 @@
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Release;
@@ -1227,12 +1249,16 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Debug;
@@ -1265,12 +1291,16 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-analytics-bridge\ios\RCTGoogleAnalyticsBridge/**",
 					"$(SRCROOT)\..\node_modules\react-native-randombytes",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-exception-handler\ios",
+					"$(SRCROOT)\..\node_modules\react-native-restart\ios\RCTRestart/**",
 				);
 			};
 			name = Release;
@@ -1298,6 +1328,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1322,6 +1354,8 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

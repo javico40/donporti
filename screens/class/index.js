@@ -15,7 +15,16 @@ import Moment from 'moment';
 
 import { NavigationActions } from 'react-navigation';
 
-export default class MemberArea extends Component {
+import { GoogleAnalyticsTracker, GoogleTagManager, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
+
+// The tracker must be constructed, and you can have multiple:
+let tracker = new GoogleAnalyticsTracker('UA-107124383-1');
+
+// The GoogleAnalyticsSettings is static, and settings are applied across all trackers:
+GoogleAnalyticsSettings.setDispatchInterval(30);
+
+
+export default class ClassArea extends Component {
 
 	constructor(props) {
 
@@ -107,6 +116,9 @@ export default class MemberArea extends Component {
 
 
   render() {
+
+    tracker.trackScreenView('Class');
+    tracker.trackEvent('Mobile', 'ViewClass');
      
      Moment.locale('es');
 
@@ -193,9 +205,9 @@ export default class MemberArea extends Component {
                 <Button full sucess
                         style={styles.botonReserva}
                         onPress={
-                                  () => navigate('Product', { classid: classid })
+                                  () => navigate('Product', { classid: classid, filterID: classfilter })
                                 }>
-                    <Text style={styles.tituloReserva}>Reserva tu clase</Text>
+                    <Text style={styles.tituloReserva}>Comprar</Text>
                 </Button>
                </Body>
             </CardItem>

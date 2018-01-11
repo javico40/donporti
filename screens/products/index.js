@@ -12,6 +12,15 @@ import {
 
 import { Container, Header, Button, Content, Card, CardItem, Left, Right, Body, Thumbnail, Spinner, Icon, List, ListItem, Title, Subtitle, Drawer, Form, Item, Input, Label } from 'native-base';
 
+import { GoogleAnalyticsTracker, GoogleTagManager, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
+
+// The tracker must be constructed, and you can have multiple:
+let tracker = new GoogleAnalyticsTracker('UA-107124383-1');
+
+// The GoogleAnalyticsSettings is static, and settings are applied across all trackers:
+GoogleAnalyticsSettings.setDispatchInterval(30);
+
+
 export default class ProductsScreen extends Component {
 
 	onstructor(props) {
@@ -32,6 +41,7 @@ export default class ProductsScreen extends Component {
         }else{
 
           var classid = params.classid;
+          var classfilter = params.filterID;
           let username = this.state.user;
           let usermail = this.state.mail;
           let userphone = this.state.phone;
@@ -70,7 +80,7 @@ export default class ProductsScreen extends Component {
                Alert.alert('Reserva de clase',
                            answer,
               [
-              {text: 'Cerrar', onPress: () => navigate('Memberarea') },
+              {text: 'Cerrar', onPress: () => navigate('Memberarea',{ filterID: classfilter }) },
               ],
               { cancelable: false }
               );
@@ -95,6 +105,9 @@ validateEmail = (email) => {
 }
 
 	render() {
+
+    tracker.trackScreenView('Product');
+    tracker.trackEvent('Mobile', 'ViewClassReserv');
 
 		const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
@@ -147,7 +160,7 @@ validateEmail = (email) => {
                 <Button full sucess
                         style={styles.botonReserva}
                         onPress={this._handlePress.bind(this)} >
-                    <Text style={styles.tituloReserva}>Confirmar reserva</Text>
+                    <Text style={styles.tituloReserva}>Confirmar compra</Text>
                 </Button>
     				 </Content>
     			</Container>

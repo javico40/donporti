@@ -15,9 +15,11 @@
     "react-native-credit-card-input": "^0.3.3",
     "react-native-crypto": "^2.1.1",
     "react-native-deprecated-custom-components": "^0.1.1",
+    "react-native-exception-handler": "^2.7.0",
     "react-native-google-analytics-bridge": "^5.4.1",
     "react-native-md5": "^1.0.0",
     "react-native-randombytes": "^3.0.0",
+    "react-native-restart": "0.0.6",
     "react-native-sglistview": "^0.4.3",
     "react-native-vector-icons": "^4.3.0",
     "react-navigation": "^1.0.0-beta.11"

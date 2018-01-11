@@ -10,10 +10,57 @@ import {
   StyleSheet,
   Text,
   View,
-  AsyncStorage
+  AsyncStorage,
+  Alert
 } from 'react-native';
-
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import {setJSExceptionHandler, getJSExceptionHandler} from 'react-native-exception-handler';
+import {setNativeExceptionHandler} from 'react-native-exception-handler';
+import RNRestart from 'react-native-restart';
+import { GoogleAnalyticsTracker, GoogleTagManager, GoogleAnalyticsSettings } from 'react-native-google-analytics-bridge';
+
+// The tracker must be constructed, and you can have multiple:
+let tracker = new GoogleAnalyticsTracker('UA-107124383-1');
+
+// The GoogleAnalyticsSettings is static, and settings are applied across all trackers:
+GoogleAnalyticsSettings.setDispatchInterval(30);
+
+
+const errorHandler = (e, isFatal) => {
+  if (isFatal) {
+    Alert.alert(
+        'Un error inexperado ha ocurrido',
+        `
+        Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
+
+        We will need to restart the app.
+        `,
+      [{
+        text: 'Reiniciar',
+        onPress: () => {
+          RNRestart.Restart();
+        }
+      }]
+    );
+  } else {
+    console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+  }
+};
+
+// registering the error handler (maybe u can do this in the index.android.js or index.ios.js)
+setJSExceptionHandler(errorHandler);
+
+// getJSExceptionHandler gives the currently set JS exception handler
+const currentHandler = getJSExceptionHandler();
+
+setNativeExceptionHandler((exceptionString) => {
+  // This is your custom global error handler
+  // You do stuff likehit google analytics to track crashes.
+  // or hit a custom api to inform the dev team.
+  //NOTE: alert or showing any UI change via JS
+  //WILL NOT WORK in case of NATIVE ERRORS.
+  console.log('Error en la app');
+});
 
 import LoginScreen from "./screens/login/index";
 import SignupScreen from "./screens/signup/index";
