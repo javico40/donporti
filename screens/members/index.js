@@ -12,8 +12,7 @@ import {
 import { ListView } from 'react-native';
 import SGListView from 'react-native-sglistview';
 import { Container, Header, Button, Content, Card, CardItem, Left, Right, Body, Thumbnail, Spinner, Icon, List, ListItem, Title, Subtitle, Drawer } from 'native-base';
-
-
+ 
 const LIST_VIEW = 'listview';
 
 const background = require("./signup_bg.png");
@@ -81,6 +80,10 @@ constructor(props) {
     
     try {
 
+      //const { params } = this.props.navigation.state;
+      //var filterCLass = params.filterID;
+      //console.warn('filtro '+filterCLass);
+
       //var local = 'http://localhost:8089/classes/';
       //var local = 'http://10.69.194.146:8089/classes/';
       //var local = 'http://192.168.0.8:8039/govirfit/discovery.php/checkclases/';
@@ -113,43 +116,66 @@ constructor(props) {
        
     }
 
-
   // Nav options can be defined as a function of the screen's props:
   static navigationOptions = ({ navigation }) => ({
     //title: 'Chat with ${navigation.state.params.user}',
   });
 
   render() {
-    
+
+     closeDrawer = () => {
+      this.drawer._root.close()
+    };
+
+    openDrawer = () => {
+      this.drawer._root.open()
+    };
+
     // The screen's current route is passed in to `props.navigation.state`:
     const { params } = this.props.navigation.state;
-    const { navigate } = this.props.navigation;
+    const { state, navigate } = this.props.navigation;
+
+    var filterID = params.filterID;
+
+    var dataSource = ''; 
+
+    if(filterID != 10){
+      //console.warn('filter'+filterID);
+      //console.warn(datas);
+      dataSource = datas.filter(x => x.categoria_id == filterID);
+      //const space = datas.filter(x => x.categoria_id == filterID);
+      //console.warn(space);
+    }else{
+      dataSource = datas;
+    }
 
     //var userid = params.iduser;
     //var userName = params.user;
 
     return (
+
         <Container>
-        <Header
-           backgroundColor = '#00874F'>
+        <Header style={styles.barraSuperior}
+           >
             <Left>
-            <Button transparent>
+            <Button transparent
+                    onPress={() => navigate("DrawerOpen")}>
               <Icon ios='ios-menu' android="md-menu" />
             </Button>
            </Left>
            <Body>
-            <Title>Clases grupales</Title>
+            <Title style={styles.toolbarTitle}>Clases grupales</Title>
           </Body>
           <Right>
             <Button transparent>
-              <Thumbnail size={45} source={{ uri: 'http://www.govirfit.com/appimg/logo_mobile.png'}} />
+              <Thumbnail size={45} source={{ uri: 'http://www.govirfit.com/appimg/logo_mini.png'}} />
             </Button>
           </Right>
         </Header>
         <Content>
               <List
-            dataArray={datas}
-            renderRow={data =>
+                dataArray={dataSource}
+                renderRow={data =>
               <ListItem thumbnail
                onPress={
                         () => navigate('Class', { classid: data.idspecialclass,
@@ -160,23 +186,34 @@ constructor(props) {
                                                   classaddress: data.place_address,
                                                   classdate: data.fecha,
                                                   classstart: data.start_hour,
-                                                  classend: data.end_hour
-
+                                                  classend: data.end_hour,
+                                                  classfilter: filterID,
+                                                  go_back_key: state.key
                                                  })
                 }>
-                <Left>
-                  <Thumbnail size={55} source={{ uri: 'http://govirfit.com/appimg/specialclass/'+data.class_picture }} />
-                </Left>
+
+              
+              <Card>
+
+                
+
+
+                <CardItem cardBody>
+                  <Image source={{uri: 'http://govirfit.com/appimg/specialclass/'+data.class_picture }} style={{height: 200, width: null, flex: 1}}/>
+                </CardItem>
+
+                <CardItem>
+              <Left>
                 <Body>
-                  <Text style={styles.classTitle}>{data.class_title}</Text>
-                  <Text numberOfLines={1} note>Lugar: {data.place_name} </Text>
-                  <Text numberOfLines={1} note>Direccion:{data.place_address}</Text>
+                  <Text style={styles.classTitle} >{data.class_title}</Text>
+                  <Text note>Lugar:{data.place_name}</Text>
+                  <Text note>Direccion:{data.place_address}</Text>
                 </Body>
-                <Right>
-                    <Thumbnail size={55} source={{ uri: 'http://www.govirfit.com/appimg/pilates_icon.png'}} />
-                    <Text style={styles.classTitle}>{data.price} PESOS</Text>
-                    <Text>{data.cantidad_package} Clases</Text>
-                </Right>
+              </Left>
+            </CardItem>
+            </Card>
+
+
               </ListItem>}
           />
         </Content>
@@ -218,6 +255,10 @@ let styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
   },
+  barraSuperior:{
+        backgroundColor:'#00874F',
+        alignItems:'center'  //Step 1
+  },
   toolbar:{
         backgroundColor:'#76C04E',
         paddingTop:30,
@@ -234,7 +275,8 @@ let styles = StyleSheet.create({
         color:'#fff',
         textAlign:'center',
         fontWeight:'bold',
-        width:100,
+        width:200,
+        paddingTop:15,
         flex:1                //Step 3
     },
   container: {

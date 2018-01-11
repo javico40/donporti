@@ -372,7 +372,7 @@ export default class LoginScreen extends Component {
         </Image>
       </View>
     );
-  }
+  }//en render
 
 }
 

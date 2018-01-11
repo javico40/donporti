@@ -108,18 +108,21 @@ validateEmail = (email) => {
     	return (
     			<Container>
              <Header
-           backgroundColor = '#00874F'>
+                    style={styles.barraSuperior}>
             <Left>
-            <Button transparent>
+            <Button transparent
+                    onPress={
+                                  () => navigate('Class', { classid: classid})
+                                }>
                <Icon name='arrow-back' />
             </Button>
            </Left>
            <Body>
-            <Title>Confirmar clase</Title>
+            <Title style={styles.toolbarTitle}>Confirmar clase</Title>
           </Body>
           <Right>
             <Button transparent>
-              <Thumbnail size={45} source={{ uri: 'http://www.govirfit.com/appimg/logo_mobile.png'}} />
+              <Thumbnail size={45} source={{ uri: 'http://www.govirfit.com/appimg/logo_mini.png'}} />
             </Button>
           </Right>
         </Header>
@@ -142,8 +145,9 @@ validateEmail = (email) => {
                     </Item>
                   </Form>
                 <Button full sucess
+                        style={styles.botonReserva}
                         onPress={this._handlePress.bind(this)} >
-                    <Text>Confirmar reserva</Text>
+                    <Text style={styles.tituloReserva}>Confirmar reserva</Text>
                 </Button>
     				 </Content>
     			</Container>
@@ -151,3 +155,156 @@ validateEmail = (email) => {
 	}
 
 }
+
+let styles = StyleSheet.create({
+  classTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  tituloReserva:{
+       color:'#fff',
+        textAlign:'center',
+        fontWeight:'bold',
+        width:200,
+        paddingTop:5,
+        flex:1    
+  },
+  botonReserva:{
+        backgroundColor:'#00874F',
+        alignItems:'center'  //Step 1
+  },
+  barraSuperior:{
+        backgroundColor:'#00874F',
+        alignItems:'center'  //Step 1
+  },
+  toolbar:{
+        backgroundColor:'#76C04E',
+        paddingTop:30,
+        paddingBottom:10,
+        flexDirection:'row',
+        alignItems:'center'  //Step 1
+    },
+    toolbarButton:{
+        width: 150,            //Step 2
+        color:'#fff',
+        textAlign:'center'
+    },
+    toolbarTitle:{
+        color:'#fff',
+        textAlign:'center',
+        fontWeight:'bold',
+        width:200,
+        paddingTop:15,
+        flex:1                //Step 3
+    },
+  container: {
+    flex: 1,
+  },
+  bg: {
+    paddingTop: 30,
+    width: null,
+    height: null
+  },
+  headerContainer: {
+    flexDirection:'column',
+    alignItems:'center',
+    flex: 1,
+  }
+  ,
+  inputsContainer: {
+    flex: 3,
+    marginTop: 50,
+  },
+  footerContainer: {
+    flex: 1
+  },
+  headerIconView: {
+    marginLeft: 10,
+    backgroundColor: 'transparent'
+  },
+  headerBackButtonView: {
+    width: 35,
+    height: 35,
+  },
+  backButtonIcon: {
+    width: 35,
+    height: 35
+  },
+  headerTitleView: {
+    backgroundColor: 'transparent',
+    marginTop: 25,
+    marginLeft: 25,
+  },
+  titleViewText: {
+    fontSize: 40,
+    color: '#fff',
+  },
+  inputs: {
+    paddingVertical: 20,
+  },
+  titleContainer: {
+    borderWidth: 1,
+    borderBottomColor: '#CCC',
+    borderColor: 'transparent',
+    flexDirection: 'row',
+  },
+  inputContainer: {
+    borderWidth: 1,
+    borderBottomColor: '#CCC',
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    height: 75,
+  },
+  iconContainer: {
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  inputIcon: {
+    width: 30,
+    height: 30,
+  },
+  input: {
+    flex: 1,
+    fontSize: 20,
+  },
+  notify: {
+    backgroundColor: 'transparent',
+    color:'#00874F',
+    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
+    fontSize: 15,
+    fontWeight:'bold',
+    flexDirection:'column',
+    alignItems: 'center',
+  },
+  welcome: {
+    backgroundColor: 'transparent',
+    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
+    fontSize: 30,
+    fontWeight:'bold',
+  },
+  signup: {
+    backgroundColor: '#FF3366',
+    paddingVertical: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  signin: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  greyFont: {
+    color: '#D8D8D8'
+  },
+  whiteFont: {
+    color: '#FFF'
+  }
+})

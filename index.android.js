@@ -13,7 +13,7 @@ import {
   AsyncStorage
 } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
 
 import LoginScreen from "./screens/login/index";
 import SignupScreen from "./screens/signup/index";
@@ -23,6 +23,8 @@ import ProducstScreen from "./screens/products/index";
 import PaymethodsScreen from "./screens/paymethods/index";
 import CreditCardsScreen from "./screens/ccards/index";
 import CreditCardRegScreen from "./screens/ccardreg/index";
+import FrontendScreen from "./screens/frontend/index";
+import SideBarScreen from "./screens/sidebar/SideBar";
 
 export default class govirfitapp extends Component {
 
@@ -63,8 +65,24 @@ export default class govirfitapp extends Component {
 
 }
 
+const Drawer = DrawerNavigator(
+  {
+    Frontend: { screen: FrontendScreen, title: 'Bienvenido' },
+    Memberarea: { screen: MemberScreen, title: 'Bienvenido' }
+    },
+  {
+      initialRouteName: "Frontend",
+      contentOptions: {
+      activeTintColor: "#e91e63"
+    },
+    contentComponent: props => <SideBarScreen {...props} />
+  }
+);
+
 const SimpleApp = StackNavigator(
 {
+  Drawer: { screen: Drawer },
+  Frontend: { screen: FrontendScreen, title: 'Bienvenido' },
   Memberarea: { screen: MemberScreen, title: 'Bienvenido' },
   Home: { screen: LoginScreen },
   Signup: { screen: SignupScreen, title: 'Registro de Usuarios' },
@@ -73,15 +91,16 @@ const SimpleApp = StackNavigator(
   Paymethod: { screen: PaymethodsScreen, title: 'Metodos de pago' },
   CreditCard: { screen: CreditCardsScreen, title: 'Tarjetas de credito' },
   CreditCardReg: { screen: CreditCardRegScreen, title: 'Registrar tarjeta de credito' },
+  SideBar: { screen: SideBarScreen, title: '' },
 },
 {
+  initialRouteName: "Drawer",
   headerMode: 'none',
   navigationOptions: {
-    headerVisible: false,
+  headerVisible: false,
 }
 }
 );
-
 
 const styles = StyleSheet.create({
   container: {
